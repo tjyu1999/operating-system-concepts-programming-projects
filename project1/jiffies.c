@@ -1,9 +1,9 @@
 # include <linux/init.h>
-# include <linux/jiffies.h>
 # include <linux/kernel.h>
 # include <linux/module.h>
 # include <linux/proc_fs.h>
-# include <asm/uaccess.h>
+# include <linux/uaccess.h>
+# include <linux/jiffies.h>
 
 # define BUFFER_SIZE 128
 # define PROC_NAME "jiffies"
@@ -39,7 +39,7 @@ static ssize_t proc_read(struct file* file, char __user* usr_buf, size_t count, 
     
     completed = 1;
     rv = sprintf(buffer, "Current value of jiffies: %lu\n", jiffies);
-    raw_copy_to_user(usr_buf, buffer, rv);
+    copy_to_user(usr_buf, buffer, rv);
     
     return rv;
 }
