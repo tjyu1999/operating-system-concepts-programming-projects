@@ -1,4 +1,11 @@
 # include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
+# include <stdbool.h>
+
+# define MAX_LINE 80 /* 80 chars per line, per command */
+# define DELIMITERS " \t\n\v\f\r"
 
 /*
  * Function: init_args
