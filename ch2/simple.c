@@ -19,4 +19,4 @@ module exit(simple exit);
 
 MODULE LICENSE("GPL");
 MODULE DESCRIPTION("Simple Module");
-MODULE AUTHOR("TJYU");
+MODULE AUTHOR("tjyu");
