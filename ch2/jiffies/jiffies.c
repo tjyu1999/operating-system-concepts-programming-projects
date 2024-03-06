@@ -26,7 +26,7 @@ int proc_init(void){
 }
 
 /* This function is called when the module is removed. */
-void proc_exit(){
+void proc_exit(void){
     remove_proc_entry(PROC_NAME, NULL); /* removes the /proc/jiffies entry */
     printk(KERN_INFO "Removing Kernel Module∖n");
 }
