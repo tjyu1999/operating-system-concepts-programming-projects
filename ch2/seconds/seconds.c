@@ -5,12 +5,12 @@
 # include <linux/jiffies.h>
 # include <asm/param.h>
 
-# define BUFFER_SIZE 128
+# define BUFFER_SIZE_128
 # define PROC_NAME "seconds"
 
 unsigned long int t = 0;
 
-static ssize_t proc_read(struct file *file, char *buffer, size_t cnt, loff_t *pos);
+ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *pos);
 
 static struct file_operations proc_ops = {
     .owner = THIS_MODULE;
@@ -18,18 +18,21 @@ static struct file_operations proc_ops = {
 };
 
 /* This function is called when the module is loaded. */
-static int porc_init(void){
+int porc_init(void){
     proc_create(PROC_NAME, 0666, NULL, &proc_ops); /* creates the /proc/seconds entry */
+    printk(KERN_INFO "Loading Kernel Module∖n");
+    
     return 0;
 }
 
 /* This function is called when the module is removed. */
-static void proc_exit(){
+void proc_exit(){
     remove_proc_entry(PROC_NAME, NULL); /* removes the /proc/seconds entry */
+    printk(KERN_INFO "Removing Kernel Module∖n");
 }
 
 /* This function is called each time /proc/seconds is read */
-static ssize_t proc_read(struct file *file, char *buffer, size_t cnt, loff_t *pos){
+ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *pos){
     int rv = 0;
     char buffer[BUFFER_SIZE];
     static int completed = 0;
