@@ -43,7 +43,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *p
     }
     
     completed = 1;
-    rv = sprintf(buffer, "Elapsed seconds: %lu\n", (jiffies - t) / HZ);
+    rv = sprintf(buffer, "Number of elapsed seconds: %lu\n", (jiffies - t) / HZ);
     copy_to_user(usr_buf, buffer, rv); /* copies kernel space buffer to user space usr_buf */
     
     return rv;
