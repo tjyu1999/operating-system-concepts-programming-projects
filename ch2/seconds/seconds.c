@@ -12,9 +12,8 @@ unsigned long int t = 0;
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *pos);
 
-static struct file_operations proc_ops = {
-    .owner = THIS_MODULE,
-    .read = proc_read
+static struct proc_ops proc_ops = {
+    .proc_read = proc_read
 };
 
 /* This function is called when the module is loaded. */
