@@ -1,2 +1,2 @@
 # operating-system-concepts-programming-projects
-Programming projects solutions in Operating System Concepts 10e.
+Solutions of programming projects in Operating System Concepts 10e.
