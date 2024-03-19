@@ -9,7 +9,7 @@ int proc_init(void){
     
     for_each_process(task){
         /* on each iteration task points to the next task */
-        printk(KERN_INFO "pid: %d\t pname: %ld\t state: %d\n", task->pid, task->comm, task->__state);
+        printk(KERN_INFO "pid: %d\t pname: %s\t state: %d\n", task->pid, task->comm, task->__state);
     }
     
     return 0;
