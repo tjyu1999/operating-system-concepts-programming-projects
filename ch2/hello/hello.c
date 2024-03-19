@@ -16,7 +16,7 @@ static struct proc_ops proc_ops = {
 /* This function is called when the module is loaded. */
 int proc_init(void){
     proc_create(PROC_NAME, 0666, NULL, &proc_ops); /* creates the /proc/hello entry */
-    printk(KERN_INFO "Loading Kernel Module∖n");
+    printk(KERN_INFO "Loading Kernel Module\n");
     
     return 0;
 }
@@ -24,7 +24,7 @@ int proc_init(void){
 /* This function is called when the module is removed. */
 void proc_exit(void){
     remove_proc_entry(PROC_NAME, NULL); /* removes the /proc/hello entry */
-    printk(KERN_INFO "Removing Kernel Module∖n");
+    printk(KERN_INFO "Removing Kernel Module\n");
 }
 
 /* This function is called each time /proc/hello is read */
