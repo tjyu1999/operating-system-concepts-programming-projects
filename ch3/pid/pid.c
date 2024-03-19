@@ -39,7 +39,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *p
     }
     
     task = pid_task(find_vpid(), PIDTYPE_PID);
-    if(task) rv = sprintf(buffer, BUFFER_SIZE, "command = [%s], pid = [%ld], state = [%ld]\n", task->comm, curr_pid, task->state);
+    if(task) rv = sprintf(buffer, BUFFER_SIZE, "command = [%s], pid = [%ld], state = [%ld]\n", task->comm, curr_pid, task->__state);
     else printk(KERN_INFO "Invalid PID %d!", curr_pid);
     
     completed = 1;
