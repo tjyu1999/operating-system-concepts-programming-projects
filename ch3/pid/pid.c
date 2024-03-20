@@ -2,13 +2,16 @@
 # include <linux/kernel.h>
 # include <linux/module.h>
 # include <linux/proc_fs.h>
+# include <linux/slab.h>
 # include <asm/param.h>
 
 # define BUFFER_SIZE 128
 # define PROC_NAME "pid"
 
+static long curr_pid;
+
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *pos);
-ssize_t proc_write(struct file *file, char __user *usr_buf, size_t count, loff_t *pos)
+ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t count, loff_t *pos);
 
 static struct proc_ops proc_ops = {
     .proc_read = proc_read,
@@ -38,17 +41,17 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *p
         return 0;
     }
     
-    task = pid_task(find_vpid(), PIDTYPE_PID);
-    if(task) rv = sprintf(buffer, BUFFER_SIZE, "command = [%s], pid = [%ld], state = [%ld]\n", task->comm, curr_pid, task->__state);
-    else printk(KERN_INFO "Invalid PID %d!", curr_pid);
+    task = pid_task(find_vpid(curr_pid), PIDTYPE_PID);
+    if(task) rv = sprintf(buffer, "command = [%s], pid = [%ld], state = [%d]\n", task->comm, curr_pid, task->__state);
+    else rv = sprintf(buffer, "invalid pid = [%ld]\n", curr_pid);
     
     completed = 1;
-    copy_to_user(usr_buf, buffer, rv);
+    if(copy_to_user(usr_buf, buffer, rv)) rv = -1;
     
     return rv;
 }
 
-ssize_t proc_write(struct file *file, char __user *usr_buf, size_t count, loff_t *pos){
+ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t count, loff_t *pos){
     int rv = 0;
     char *k_mem;
     
@@ -56,9 +59,9 @@ ssize_t proc_write(struct file *file, char __user *usr_buf, size_t count, loff_t
     k_mem = kmalloc(count, GFP_KERNEL);
     
     /* copies user space usr buf to kernel memory */
-    copy_from_user(k_mem, usr_buf, count);
+    if(copy_from_user(k_mem, usr_buf, count)) return -1;
     k_mem[count] = '\0';
-    kstrtoint(k_mem, 10, &curr_pid);
+    if(kstrtol(k_mem, 10, &curr_pid)) return -1;
     
     /* return kernel memory */
     kfree(k_mem);
