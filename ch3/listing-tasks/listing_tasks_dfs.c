@@ -11,6 +11,7 @@ void dfs(struct task_struct *init_task){
         /* task points to the next child in the list */
         task = list_entry(list, struct task_struct, sibling);
         printk(KERN_INFO "pid: %d\t pname: %s\t state: %d\n", task->pid, task->comm, task->__state);
+        dfs(task);
     }
 }
 
