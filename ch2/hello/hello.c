@@ -40,7 +40,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t 
     
     completed = 1;
     rv = sprintf(buffer, "Hello World∖n");
-    copy_to_user(usr_buf, buffer, rv); /* copies kernel space buffer to user space usr_buf */
+    if(copy_to_user(usr_buf, buffer, rv)) return -1; /* copies kernel space buffer to user space usr_buf */
     
     return rv;
 }
