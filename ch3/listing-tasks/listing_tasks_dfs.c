@@ -1,7 +1,7 @@
 # include <linux/init.h>
 # include <linux/kernel.h>
 # include <linux/module.h>
-# include <linux/sched.h>
+# include <linux/sched/signal.h>
 
 void dfs(struct task_struct *init_task){
     struct task_struct *task;
