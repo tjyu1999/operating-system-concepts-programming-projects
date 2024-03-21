@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo insmod listing_tasks.ko
-sudo insmod listing_tasks_dfs.ko
-sudo rmmod listing_tasks
-sudo rmmod listing_tasks_dfs
+sudo insmod tasks.ko
+sudo rmmod tasks
 sudo dmesg -c
