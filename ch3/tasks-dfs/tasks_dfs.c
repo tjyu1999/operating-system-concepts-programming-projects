@@ -30,5 +30,5 @@ module_init(proc_init);
 module_exit(proc_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Listing Tasks DFS Module");
+MODULE_DESCRIPTION("Tasks DFS Module");
 MODULE_AUTHOR("tjyu");
