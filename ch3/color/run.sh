@@ -1,5 +1,5 @@
 #!/bin/bash
 
 sudo insmod color.ko
-sudo rmmod pid
+sudo rmmod color
 sudo dmesg -c
