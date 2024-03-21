@@ -2,6 +2,7 @@
 # include <linux/kernel.h>
 # include <linux/module.h>
 # include <linux/types.h>
+# include <linux/slab.h>
 # include <linux/list.h>
 
 struct color{
@@ -12,39 +13,37 @@ struct color{
 };
 
 int proc_init(void){
-    printk(KERN_INFO "Loading Kernel Module\n");
-    
+    struct color *violet;    
+    struct color *ptr;
     static LIST_HEAD(color_list);
-    struct color *violet;
     
-    violet = kmalloc(sizeof(*violet), GPL_KERNEL);
+    violet = kmalloc(sizeof(*violet), GFP_KERNEL);
     violet->red = 138;
     violet->blue = 43;
     violet->green = 226;
     
     INIT_LIST_HEAD(&violet->list);
-    list_add_tail(&violet->list, &color->list);
-    
-    struct color *ptr;
+    list_add_tail(&violet->list, &color_list);
     list_for_each_entry(ptr, &color_list, list){
         /* on each iteration ptr points */
         /* to the next struct color */
-        printk(KERN_INFO "red: %d\t blue: %d\t green: %d\n", ptr>red, ptr->blue, ptr->green);
+        printk(KERN_INFO "red: %4d\t blue: %4d\t green: %4d\n", ptr->red, ptr->blue, ptr->green);
     }
     
+    printk(KERN_INFO "Loading Kernel Module\n");
     return 0;
 }
 
 void proc_exit(void){
-    static LIST_HEAD(color_list);
     struct color *ptr;
     struct color *next;
+    static LIST_HEAD(color_list);
     
     list_for_each_entry_safe(ptr, next, &color_list, list){
         /* on each iteration ptr points */
         /* to the next struct color */
-        list_del(&violet->list);
-        kfree(violet);
+        list_del(&ptr->list);
+        kfree(ptr);
     } 
     
     printk(KERN_INFO "Removing Kernel Module\n");
