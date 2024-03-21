@@ -28,7 +28,7 @@ int proc_init(void){
     list_for_each_entry(ptr, &color_list, list){
         /* on each iteration ptr points */
         /* to the next struct color */
-        printk(KERN_INFO "Composition of color violet: red = %4d;\t blue = %4d;\t green = %4d.\n", ptr->red, ptr->blue, ptr->green);
+        printk(KERN_INFO "red: %4d\t blue: %4d\t green: %4d\n", ptr->red, ptr->blue, ptr->green);
     }
     
     printk(KERN_INFO "Loading Kernel Module\n");
