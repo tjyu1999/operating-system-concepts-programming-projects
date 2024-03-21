@@ -5,6 +5,8 @@
 # include <linux/slab.h>
 # include <linux/list.h>
 
+static LIST_HEAD(color_list);
+
 struct color{
     int red;
     int blue;
@@ -13,9 +15,8 @@ struct color{
 };
 
 int proc_init(void){
-    struct color *violet;    
+    struct color *violet;
     struct color *ptr;
-    static LIST_HEAD(color_list);
     
     violet = kmalloc(sizeof(*violet), GFP_KERNEL);
     violet->red = 138;
@@ -37,7 +38,6 @@ int proc_init(void){
 void proc_exit(void){
     struct color *ptr;
     struct color *next;
-    static LIST_HEAD(color_list);
     
     list_for_each_entry_safe(ptr, next, &color_list, list){
         /* on each iteration ptr points */
