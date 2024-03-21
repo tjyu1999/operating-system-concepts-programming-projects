@@ -23,5 +23,5 @@ module_init(proc_init);
 module_exit(proc_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Listing Tasks Module");
+MODULE_DESCRIPTION("Tasks Module");
 MODULE_AUTHOR("tjyu");
