@@ -2,50 +2,47 @@
 # include <linux/kernel.h>
 # include <linux/module.h>
 # include <linux/types.h>
+# include <linux/slab.h>
 # include <linux/list.h>
 # include <linux/moduleparam.h>
 
-struct color{
-    int red;
-    int blue;
-    int green;
+static int start = 25;
+static LIST_HEAD(color_list);
+
+struct collatz{
+    int val;
     struct list_head list;
 };
 
+int calculation(int val){
+    if(n % 2 == 0) return n / 2;
+    return 3 * n + 1;
+}
+
 int proc_init(void){
-    printk(KERN_INFO "Loading Kernel Module\n");
-    
-    static LIST_HEAD(color_list);
-    struct color *violet;
-    
-    violet = kmalloc(sizeof(*violet), GPL_KERNEL);
-    violet->red = 138;
-    violet->blue = 43;
-    violet->green = 226;
-    
-    INIT_LIST_HEAD(&violet->list);
-    list_add_tail(&violet->list, &color->list);
-    
     struct color *ptr;
-    list_for_each_entry(ptr, &color_list, list){
-        /* on each iteration ptr points */
-        /* to the next struct color */
-        printk(KERN_INFO "%d %d %d \n", violet->red, violet->blue, violet->green);
+    
+    while(val != 1){
+        struct collatz *node = kmalloc(sizeof(node), GFP_KERNEL);
+        
+        INIT_LIST_HEAD(&node->list);
+        list_add_tail(&node->list, &collatz_list);
+        val = calcuation(val);
     }
     
+    list_for_each_entry(ptr, &collatz_list, list) printk(KERN_INFO "Collatz sequence value: %4d\n", ptr->val);
+    
+    printk(KERN_INFO "Loading Kernel Module\n");
     return 0;
 }
 
 void proc_exit(void){
-    static LIST_HEAD(color_list);
     struct color *ptr;
     struct color *next;
     
-    list_for_each_entry_safe(ptr, next, &color_list, list){
-        /* on each iteration ptr points */
-        /* to the next struct color */
-        list_del(&violet->list);
-        kfree(violet);
+    list_for_each_entry_safe(ptr, next, &collatz_list, list){
+        list_del(&ptr->list);
+        kfree(ptr);
     } 
     
     printk(KERN_INFO "Removing Kernel Module\n");
