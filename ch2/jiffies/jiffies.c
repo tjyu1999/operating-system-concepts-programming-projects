@@ -42,7 +42,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *p
     }
     
     completed = 1;
-    rv = sprintf(buffer, "Current value of jiffies: %lu\n", jiffies);
+    rv = sprintf(buffer, "current jiffies: %lu\n", jiffies);
     if(copy_to_user(usr_buf, buffer, rv)) return -1; /* copies kernel space buffer to user space usr_buf */
     
     return rv;
