@@ -31,7 +31,7 @@ int proc_init(void){
         printk(KERN_INFO "red: %4d\t blue: %4d\t green: %4d\n", ptr->red, ptr->blue, ptr->green);
     }
     
-    printk(KERN_INFO "Loading Kernel Module\n");
+    printk(KERN_INFO "Loading kernel module\n");
     return 0;
 }
 
@@ -46,7 +46,7 @@ void proc_exit(void){
         kfree(ptr);
     } 
     
-    printk(KERN_INFO "Removing Kernel Module\n");
+    printk(KERN_INFO "Removing kernel module\n");
 }
 
 module_init(proc_init);
