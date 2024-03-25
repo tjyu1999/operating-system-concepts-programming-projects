@@ -78,7 +78,6 @@ int main(int argc, char *argv[]){
     for(i = 0; i < 9; i++){
         for(j = 0; j < 9; j++) fscanf(file, "%d", &sudoku[i][j]);
     }
-    fclose(file);
     
     int i;
     int j;
@@ -113,5 +112,6 @@ int main(int argc, char *argv[]){
     if(valid == 3 * 9) printf("valid\n");
     else printf("invalid\n");
     
+    fclose(file);
     return 0;
 }
