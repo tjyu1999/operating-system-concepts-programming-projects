@@ -37,7 +37,7 @@ int proc_init(void){
         val = calculation(val);
     }
     
-    list_for_each_entry(ptr, &collatz_list, list) printk(KERN_INFO "Collatz sequence value: %4d\n", ptr->val);
+    list_for_each_entry(ptr, &collatz_list, list) printk(KERN_INFO "collatz sequence value: %4d\n", ptr->val);
 
     return 0;
 }
