@@ -70,20 +70,19 @@ void *subgrid_check(void *data){
 }
 
 int main(int argc, char *argv[]){
+    if(argc < 2) return 1;
+    
+    FILE *file = fopen(argv[1], "r");
+    if(!file) return 1;
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++) fscanf(file, "%d", &sudoku[i][j]);
+    }
+    fclose(file);
+    
     int i;
     int j;
     int index = 0;
     pthread_t threads[3 * 9];
-    FILE *file = fopen(argv[1], "r");
-    
-    if(!file){
-        fprintf(stderr, "Unable to open file\n");
-        return 1;
-    }
-    
-    for(i = 0; i < 9; i++){
-        for(j = 0; j < 9; j++) fscanf(file, "%d", &sudoku[i][j]);
-    }
     
     for(i = 0; i < 9; i++){
         parameters *data = (parameters*)malloc(sizeof(parameters));
@@ -112,7 +111,6 @@ int main(int argc, char *argv[]){
     for(int k = 0; k < index; k++) pthread_join(threads[k], NULL);
     if(valid == 3 * 9) printf("valid\n");
     else printf("invalid\n");
-    fclose(file);
     
     return 0;
 }
