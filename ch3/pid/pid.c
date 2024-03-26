@@ -20,14 +20,14 @@ static struct proc_ops proc_ops = {
 
 int proc_init(void){
     proc_create(PROC_NAME, 0666, NULL, &proc_ops);
-    printk(KERN_INFO "Loading Kernel Module\n");
+    printk(KERN_INFO "Loading kernel module\n");
     
     return 0;
 }
 
 void proc_exit(void){
     remove_proc_entry(PROC_NAME, NULL);
-    printk(KERN_INFO "Removing Kernel Module\n");
+    printk(KERN_INFO "Removing kernel module\n");
 }
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t cnt, loff_t *pos){
