@@ -4,7 +4,7 @@
 # include <linux/sched/signal.h>
 
 int proc_init(void){
-    printk(KERN_INFO "Loading Kernel Module\n");
+    printk(KERN_INFO "Loading kernel module\n");
     struct task_struct *task;
     
     for_each_process(task){
@@ -16,7 +16,7 @@ int proc_init(void){
 }
 
 void proc_exit(void){
-    printk(KERN_INFO "Removing Kernel Module\n");
+    printk(KERN_INFO "Removing kernel module\n");
 }
 
 module_init(proc_init);
