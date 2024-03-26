@@ -16,14 +16,14 @@ void dfs(struct task_struct *init_task){
 }
 
 int proc_init(void){
-    printk(KERN_INFO "Loading Kernel Module\n");
+    printk(KERN_INFO "Loading kernel module\n");
     dfs(&init_task);
     
     return 0;
 }
 
 void proc_exit(void){
-    printk(KERN_INFO "Removing Kernel Module\n");
+    printk(KERN_INFO "Removing kernel module\n");
 }
 
 module_init(proc_init);
